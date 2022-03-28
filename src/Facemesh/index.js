@@ -12,7 +12,8 @@
  */
 
 import * as tf from "@tensorflow/tfjs";
-import * as facemeshCore from "@tensorflow-models/facemesh";
+// import * as facemeshCore from "@tensorflow-models/facemesh";
+import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
 import { EventEmitter } from "events";
 import callCallback from "../utils/callcallback";
 
@@ -39,7 +40,11 @@ class Facemesh extends EventEmitter {
    * @return {this} the Facemesh model.
    */
   async loadModel() {
-    this.model = await facemeshCore.load(this.config);
+    // this.model = await facemeshCore.load(this.config);
+    this.model = await faceLandmarksDetection.load(
+        faceLandmarksDetection.SupportedPackages.mediapipeFacemesh,
+        this.config
+    );
     this.modelReady = true;
 
     if (this.video && this.video.readyState === 0) {
